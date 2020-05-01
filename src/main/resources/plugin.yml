@@ -1,0 +1,10 @@
+name: FishSlap
+version: 1.0-SNAPSHOT
+main: com.sandlotminecraft.fishslap.FishSlap
+author: cheracc
+commands:
+  givefish:
+    description: Gives a player a fish of specified type and level
+    usage: /givefish <type> <level> [player]
+    permission: fishslap.givefish
+    permission-message: You don't have permission to do that.
