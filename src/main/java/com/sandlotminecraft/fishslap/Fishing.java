@@ -92,6 +92,11 @@ public class Fishing implements Listener {
                     ~50% Chance to catch a Cod
                     */
 
+                    GameTracker.addScore(p, null, rand.nextInt(5));
+                    if (Fish.isFish(p.getInventory().getItemInOffHand()))
+                        Fish.giveXP(p,p.getInventory().getItemInOffHand(),rand.nextInt(2));
+
+
                     ItemStack[] inventory = p.getInventory().getContents();
                     short fishType = 4;
 

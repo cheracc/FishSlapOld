@@ -4,10 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -49,20 +51,28 @@ public class Fish {
        if (type == 3) {
            lore.add(ChatColor.GRAY + "When held in off-hand:");
            lore.add(ChatColor.BLUE + "  Adds Thorns " + toRomanNum(FishStats.enchant1level[type][level]-1));
+           if (FishStats.armorValue[type][level] != 0)
+               lore.add(ChatColor.BLUE + "  +" + FishStats.armorValue[type][level] + " Armor");
+
            lore.add(ChatColor.GRAY + "When used (in off-hand)");
-           lore.add(ChatColor.BLUE + "  Removes Poison (" + FishStats.cooldown[type][level] + " sec cooldown)");
-       }
-       if (FishStats.onEquipEffect[type][level] != null) {
-           lore.add(ChatColor.GRAY + "When held in off-hand:");
-           lore.add(ChatColor.BLUE + "  Adds " + getEffectName(FishStats.onEquipEffect[type][level]) + " " + toRomanNum(FishStats.equipEffectLevel[type][level]));
-       }
-       if (FishStats.onUseEffect[type][level] != null) {
-           lore.add(ChatColor.GRAY + "When used (in off-hand):");
-           if (FishStats.onUseEffect[type][level] == PotionEffectType.HEAL)
-               lore.add(ChatColor.BLUE + " " + getEffectName(FishStats.onUseEffect[type][level]) + " " + toRomanNum(FishStats.useEffectLevel[type][level]));
-           else
-               lore.add(ChatColor.BLUE + "  " + getEffectName(FishStats.onUseEffect[type][level]) + " " + toRomanNum(FishStats.useEffectLevel[type][level]) + " for " + FishStats.useEffectDuration[type][level] + " sec");
+           lore.add(ChatColor.BLUE + "  Removes Poison");
            lore.add(ChatColor.BLUE + "  (" + FishStats.cooldown[type][level] + " sec cooldown)");
+       } else {
+           if (FishStats.onEquipEffect[type][level] != null || FishStats.armorValue[type][level] != 0) {
+               lore.add(ChatColor.GRAY + "When held in off-hand:");
+               if (FishStats.onEquipEffect[type][level] != null)
+                   lore.add(ChatColor.BLUE + "  Adds " + getEffectName(FishStats.onEquipEffect[type][level]) + " " + toRomanNum(FishStats.equipEffectLevel[type][level]));
+               if (FishStats.armorValue[type][level] != 0)
+                   lore.add(ChatColor.BLUE + "  +" + FishStats.armorValue[type][level] + " Armor");
+           }
+           if (FishStats.onUseEffect[type][level] != null) {
+               lore.add(ChatColor.GRAY + "When used (in off-hand):");
+               if (FishStats.onUseEffect[type][level] == PotionEffectType.HEAL)
+                   lore.add(ChatColor.BLUE + "  " + getEffectName(FishStats.onUseEffect[type][level]) + " " + toRomanNum(FishStats.useEffectLevel[type][level]));
+               else
+                   lore.add(ChatColor.BLUE + "  " + getEffectName(FishStats.onUseEffect[type][level]) + " " + toRomanNum(FishStats.useEffectLevel[type][level]) + "  for " + FishStats.useEffectDuration[type][level] + " sec");
+               lore.add(ChatColor.BLUE + "  (" + FishStats.cooldown[type][level] + " sec cooldown)");
+           }
        }
        im.setLore(lore);
        fish.setItemMeta(im);
@@ -74,6 +84,10 @@ public class Fish {
    public static void addEquipEffect(Player p, ItemStack fish) {
        int type = fish.getDurability();
        int level = getLevel(fish);
+
+       if (FishStats.armorValue[type][level] != 0) {
+           p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(FishStats.armorValue[type][level]);
+       }
 
        if (FishStats.onEquipEffect[type][level] == null && type != 3)
            return;
@@ -93,6 +107,8 @@ public class Fish {
    public static void removeEquipEffect(Player p, ItemStack fish) {
         int type = fish.getDurability();
         int level = getLevel(fish);
+
+           p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
 
        if (FishStats.onEquipEffect[type][level] == null && type != 3)
            return;
@@ -122,6 +138,8 @@ public class Fish {
                return "Regeneration";
            case "HEAL":
                return "Instant Heal";
+           case "SPEED":
+               return "Speed";
            default:
                return "";
        }
@@ -136,6 +154,10 @@ public class Fish {
                return "II";
            case 2:
                return "III";
+           case 3:
+               return "IV";
+           case 4:
+               return "V";
            default:
                return "";
        }

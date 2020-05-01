@@ -137,12 +137,15 @@ public class FishCombat implements Listener {
 
         if (Fish.isFish(p.getInventory().getItemInMainHand())) {
             ItemStack fish = p.getInventory().getItemInMainHand();
-            int damage = FishStats.damage[fish.getDurability()][Fish.getLevel(fish)];
+            double damage = FishStats.damage[fish.getDurability()][Fish.getLevel(fish)];
+            double targetArmor = t.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue();
+
 
             //set the raw damage for anything other than the grouper (this can be reduced by resistance/armor)
             if (fish.getDurability() != 2) {
+                damage = Math.max(1, damage * (1 - (Math.min(20, targetArmor/5)/25)));
                 event.setDamage(damage);
-                GameTracker.addScore(p, t.getDisplayName(), damage);
+                GameTracker.addScore(p, t.getDisplayName(), (int) Math.round(damage));
                 p.getWorld().playSound(t.getEyeLocation(), Sound.ENTITY_SLIME_SQUISH, 1, 1);
                 Random rand = new Random();
                 for (int i = 0; i < 3; i++) {
@@ -176,7 +179,7 @@ public class FishCombat implements Listener {
                     // set their health
                     t.setHealth(Math.min(20, t.getHealth() + damage));
                     // award xp
-                    GameTracker.addScore(p, t.getDisplayName(), damage);
+                    GameTracker.addScore(p, t.getDisplayName(), (int) Math.round(damage));
                     GameTracker.doHealCooldown(p);
                     event.setCancelled(true);
                     for (int i = 0; i < 6; i++) {

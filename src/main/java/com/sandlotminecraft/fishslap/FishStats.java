@@ -15,7 +15,7 @@ public class FishStats {
     //Damage
     public static int[][] damage = {
             {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, //cod
-            {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, //salmon
+            {0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7}, //salmon
             {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, //grouper
             {0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2} //pufferfish
     };
@@ -36,13 +36,20 @@ public class FishStats {
             {0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4},
     };
 
+    public static int[][] armorValue = {
+            {0,1,2,3,4,5,6,7,8,9,10},
+            {0,0,0,0,0,0,0,0,0,0,0},
+            {0,1,1,2,2,4,4,4,6,6,8},
+            {0,1,1,2,2,4,4,4,6,6,8}
+    };
+
     // the level/distance/damage modifier of the 'sweeping edge' enchant on the cod
     public static int[] aoeDistance = {0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3};
 
     // the effect that is given when the fish is equipped
     public static PotionEffectType[][] onEquipEffect = {
             {null, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE, PotionEffectType.DAMAGE_RESISTANCE},
-            {null, null, null, null, PotionEffectType.JUMP, PotionEffectType.JUMP, PotionEffectType.JUMP, PotionEffectType.JUMP, PotionEffectType.JUMP, PotionEffectType.JUMP, PotionEffectType.JUMP},
+            {null, null, null, null, PotionEffectType.SPEED, PotionEffectType.SPEED, PotionEffectType.SPEED, PotionEffectType.SPEED, PotionEffectType.SPEED, PotionEffectType.SPEED, PotionEffectType.SPEED},
             {null, null, null, null, PotionEffectType.REGENERATION, PotionEffectType.REGENERATION, PotionEffectType.REGENERATION, PotionEffectType.REGENERATION, PotionEffectType.REGENERATION, PotionEffectType.REGENERATION, PotionEffectType.REGENERATION},
             {null, null, null, null, null, null, null, null, null, null, null}
     };
@@ -59,7 +66,7 @@ public class FishStats {
     public static int[] poisonEffectLevel = {0, 0,0,0,0,0,1,1,1,1,1};
 
     // the duration of the poison given by the pufferfish
-    public static int[] poisonEffectDuration = {0, 4, 4, 6, 6, 6, 8, 8, 8, 10, 10};
+    public static int[] poisonEffectDuration = {0, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12};
 
     // the chance for each hit from the pufferfish to poison the target
     public static int[] poisonChance = {0, 20, 20, 20, 30, 30, 30, 35, 40, 45, 50};
@@ -86,7 +93,7 @@ public class FishStats {
     // the level of the use effect
     public static int[][] useEffectLevel = {
             {0, 0,0,0,0,0,0,1,1,1,2},
-            {0, 0,0,0,0,0,0,1,1,1,1},
+            {0, 0,0,0,1,1,1,2,2,2,3},
             {0, 0,0,0,0,4,6,6,6,6,6},
             {0, 0,0,0,0,0,0,0,0,0,0}
     };
@@ -94,7 +101,7 @@ public class FishStats {
     // the cooldown of the use effect (in seconds)
     public static int[][] cooldown = {
             {0, 0,0,0,60,60,60,60,55,50,45},
-            {0, 45,45,45,45,45,45,45,45,40,35},
+            {0, 45,45,40,40,35,35,30,30,25,25},
             {0, 30,30,30,60,60,60,45,45,30,30},
             {0, 60,55,50,45,40,35,30,25,20,10}
     };

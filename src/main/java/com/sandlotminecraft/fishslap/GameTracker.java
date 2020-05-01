@@ -260,7 +260,7 @@ public class GameTracker {
         }
         Random rand = new Random();
         if (amount == 1)
-            if (rand.nextInt(5) >= 3)
+            if (rand.nextDouble() <= multiplier)
                 multiplier = 1F;
 
         // updates the scoreboard and the fish's xp
